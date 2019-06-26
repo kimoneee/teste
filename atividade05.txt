@@ -1,0 +1,34 @@
+CREATE OR REPLACE FUNCTION calcImc(peso DOUBLE PRECISION, v_altura DOUBLE PRECISION, v_imc DOUBLE PRECISION, resultado_text CHARACTER VARYING) 
+RETURNS void AS
+$$
+	DECLARE
+		var_imc DOUBLE PRECISION;
+		var_result  CHARACTER VARYING;
+	BEGIN
+		var_imc := (v_peso  /  v_altura^2);
+		IF (var_imc <= 17.0) THEN 
+			RAISE EXCEPTION 'Muito abaixo do peso' ;
+			END IF;
+			IF(var_imc >= 17.0 && var_imc =< 18.49) THEN 
+				RAISE EXCEPTION 'Abaixo do peso';
+				END IF;
+				 IF(var_imc >= 18.5 && var_imc =< 24.99) THEN 
+					RAISE EXCEPTION 'Peso normal';
+					END IF;
+					 IF(var_imc >= 25.0 && var_imc =< 29.9) THEN 
+						RAISE EXCEPTION 'Acima do peso';
+						END IF;	
+						 IF(var_imc >= 30.0 && var_imc =< 34.99) THEN 
+							RAISE EXCEPTION 'Obesidade I';
+							END IF;
+							 IF(var_imc >= 35.0 && var_imc =< 39.99) THEN 
+								RAISE EXCEPTION 'Obesidade II (Severa)';
+								END IF;
+								 IF(var_imc > 40) THEN 
+									RAISE EXCEPTION 'Obesidade III (Mórbida)';
+							     END IF;
+							     
+	END;	
+$$
+LANGUAGE plpgsql
+ 1-					     
